@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ｃａｎｄｙ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="67" class="key">
+      <kbd>ｃ</kbd>
+      <span class="sound">lo</span>
+    </div>
+    <div data-key="65" class="key">
+      <kbd>ａ</kbd>
+      <span class="sound">siento</span>
+    </div>
+    <div data-key="78" class="key">
+      <kbd>ｎ</kbd>
+      <span class="sound">no</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>ｄ</kbd>
+      <span class="sound">sabía</span>
+    </div>
+    <div data-key="89" class="key">
+      <kbd>ｙ</kbd>
+      <span class="sound">que</span>
+    </div>
+    <div data-key="190" class="key">
+      <kbd>.</kbd>
+      <span class="sound">hacer jaja</span>
+    </div>
+  </div>
+
+  <audio data-key="67" src="sounds/le gusta lo kinky nasty.mp3"></audio>
+  <audio data-key="65" src="sounds/y aunque sea fancy.mp3"></audio>
+  <audio data-key="78" src="sounds/y se pone cranky.mp3"></audio>
+  <audio data-key="68" src="sounds/si lo hago romantic.mp3"></audio>
+  <audio data-key="89" src="sounds/le gusta en exceso.mp3"></audio>
+  <audio data-key="190" src="sounds/y en el proceso me pide un beso.mp3"></audio>
+
+<script>
+
+  function playSound(e)
+  {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); 
+    if(!audio) return; // detiene la función
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.toggle('playing');
+  }
+
+  function removeTransition(e){
+    if (e.propertyName !== 'transform') return;
+    this.classList.remove("playing");
+  }
+  const keys = document.querySelectorAll(".key"); 
+  keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+  window.addEventListener("keydown", playSound);
+</script>
+
+
+</body>
+</html>
