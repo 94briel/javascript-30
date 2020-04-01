@@ -51,7 +51,17 @@
     if(!audio) return; // detiene la función
     audio.currentTime = 0;
     audio.play();
-    key.classList.toggle('playing');
+    key.classList.add('playing');
+  }
+
+  function playSoundOnClick(e)
+  {
+    const audio = document.querySelector(`audio[data-key="${this.getAttribute("data-key")}"]`);
+    const key = document.querySelector(`.key[data-key="${this.getAttribute("data-key")}"]`); 
+    if(!audio) return; // detiene la función
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
   }
 
   function removeTransition(e){
@@ -60,6 +70,7 @@
   }
   const keys = document.querySelectorAll(".key"); 
   keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+  keys.forEach(key => key.addEventListener("click", playSoundOnClick));
   window.addEventListener("keydown", playSound);
 </script>
 
