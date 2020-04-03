@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+    <audio controls loop id="jcd" src="sounds/Jubilife City (Day).mp3" type="audio/mpeg" hidden="true"></audio>
+    <audio controls loop id="jcn" src="sounds/Jubilife City (Night).mp3" type="audio/mpeg" hidden="true"></audio>
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background: rgb(255, 255, 255);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      background-image:url(images/ds.png);
+      background-repeat: no-repeat;
+      background-size:contain;
+      width: 60rem;
+      height: 60rem;
+      border: 10px solid white;
+      border-radius: 0%;
+      margin: 100px auto;
+      position:absolute;
+      padding: 2rem;
+      left: 30%;
+
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 10%;
+      height: 4px;
+      background: #508050;
+      bottom: 22%;
+      right: 55%;
+      position: absolute;
+      transform-origin: 100%;
+      transform: rotate(90deg);     
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+    .hour-hand {
+      width: 5%;
+    }
+
+    .second-hand {
+      width: 10%;
+      height: 2px;
+      background: #385030;
+    }
+
+  </style>
+
+  <script>
+    const secHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    function setDate()
+    {
+      const now = new Date();
+
+      const sec = now.getSeconds();
+      const secDegrees = (sec / 60) * 360;
+      secHand.style.transform = `rotate(${secDegrees}deg)`;
+
+      const min = now.getMinutes();
+      const minDegrees = ((min / 60) * 360) + ((sec/60)*6) + 90;
+      minHand.style.transform = `rotate(${minDegrees}deg)`;
+
+      const hour = now.getHours();
+      const hourDegrees = ((hour / 12) * 360) + ((min/60)*30) + 90;
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+
+      if(hour>5 && hour<18) {
+        document.getElementById('jcd').play();
+        }
+      else{
+        document.getElementById('jcn').play();
+        }
+    }
+    setInterval(setDate, 1000);
+    setOrientation();
+  </script>
+</body>
+</html>
